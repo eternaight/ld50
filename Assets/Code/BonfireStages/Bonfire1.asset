@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23f1044f71a98734badc4269829fcf08, type: 3}
   m_Name: Bonfire1
   m_EditorClassIdentifier: 
-  sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  startBurnTime: 1
+  sprite: {fileID: 10917, guid: 0000000000000000f000000000000000, type: 0}
+  startBurnTime: 0

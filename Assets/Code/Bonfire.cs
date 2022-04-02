@@ -27,6 +27,8 @@ public class Bonfire : MonoBehaviour
         ValidateBonfireStages();
 
         while (remainingBurnTime < stages[currentStage].startBurnTime) currentStage--;
+
+        AnimateLight();
     }
 
     private void OnValidate() {
@@ -41,9 +43,10 @@ public class Bonfire : MonoBehaviour
 
         if (remainingBurnTime <= 0) {
             Burnout();
-        } else if (remainingBurnTime < stages[currentStage].startBurnTime) currentStage--;
-
-        AnimateLight();
+        } else if (remainingBurnTime < stages[currentStage].startBurnTime) {
+            currentStage--;
+            UpdateBonfireRenderer();
+        }
     }
 
     private void ValidateBonfireStages() {
@@ -65,15 +68,22 @@ public class Bonfire : MonoBehaviour
     public void Feed(float seconds) {
         remainingBurnTime += seconds;
         while (currentStage < stages.Length - 1 && remainingBurnTime > stages[currentStage + 1].startBurnTime) currentStage++;
+        UpdateBonfireRenderer();
     }
 
     private void AnimateLight() {
-        var w = Mathf.PerlinNoise(Time.time * bonfireLightFrequency, 0) * bonfireLightScale;
+        var w = UnityEngine.Random.value * bonfireLightScale * ((float)currentStage / (stages.Length - 1));
         bonfireLightTransform.localScale = new Vector3(w, w, 1);
+        Invoke("AnimateLight", UnityEngine.Random.value / bonfireLightFrequency);
+    }
+
+    private void UpdateBonfireRenderer() {
+        spriteRenderer.sprite = stages[currentStage].sprite;
     }
 
     private void Burnout() {
         enabled = false;
         bonfireLightTransform.localScale = Vector3.zero;
+        CancelInvoke("AnimateLight");
     }
 }
