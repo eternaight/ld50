@@ -23,11 +23,11 @@ public class BonfireBeaconLight : MonoBehaviour
     private float dipDownTime;
 
     private Bonfire bonfire;
-    private Light2D beaconLight;
+    private Light2D[] bonfireLights;
 
     private void Start() {
         bonfire = GetComponentInParent<Bonfire>();
-        beaconLight = GetComponent<Light2D>();
+        bonfireLights = bonfire.GetComponentsInChildren<Light2D>();
 
         if (bonfire == null) { enabled = false; return; }
 
@@ -81,7 +81,11 @@ public class BonfireBeaconLight : MonoBehaviour
         transform.position = offset;
 
         // light radius
-        var w = Mathf.PerlinNoise(Time.time * beaconFrequency, 0) * beaconScale * kindlingModifier * animModifier;
-        beaconLight.pointLightOuterRadius = w;
+        var w = Mathf.PerlinNoise(Time.time * (beaconFrequency * Mathf.PerlinNoise(0.23f, Time.time)), 0.34f) * beaconScale * kindlingModifier * animModifier;
+        
+        foreach (Light2D light in bonfireLights) {
+            light.pointLightOuterRadius = w;
+            light.intensity = 0.75f * animModifier;
+        }
     }
 }

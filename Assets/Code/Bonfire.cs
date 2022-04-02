@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Experimental.Rendering.Universal;
 
 public class Bonfire : MonoBehaviour, IInteractable {
     [SerializeField] 
@@ -11,6 +12,8 @@ public class Bonfire : MonoBehaviour, IInteractable {
     private float remainingBurnTime;
     [SerializeField]
     private SpriteRenderer spriteRenderer;
+    [SerializeField]
+    private Light2D spriteLight;
 
     public delegate void BonfireKindleAction(int newKindleLevel, int previousKindling);
     public event BonfireKindleAction OnKindled;
