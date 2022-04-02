@@ -3,8 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bonfire : MonoBehaviour
-{
+public class Bonfire : MonoBehaviour, IInteractable {
     [SerializeField] 
     [Tooltip("Info about bonfire stages.")]
     private BonfireStage[] stages;
@@ -85,5 +84,11 @@ public class Bonfire : MonoBehaviour
         enabled = false;
         bonfireLightTransform.localScale = Vector3.zero;
         CancelInvoke("AnimateLight");
+    }
+
+    public void Interact(Controller controller) {
+        if (controller.inventory.TryGetStick()) {
+            Feed(10);
+        }
     }
 }

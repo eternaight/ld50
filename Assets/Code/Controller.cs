@@ -9,6 +9,12 @@ public class Controller : MonoBehaviour
     private float pointerRadius = 1;
     private float pointerLength = 0.5f;
 
+    public Inventory inventory;
+
+    private void Start() {
+        inventory = new Inventory();
+    }
+
     private void Update() {
         Move();
         PositionPointer();
@@ -44,7 +50,10 @@ public class Controller : MonoBehaviour
         if (Input.GetMouseButton(0)) {
             var hit = Physics2D.Raycast(transform.position, pointerTransform.localPosition, pointerRadius + pointerLength / 2);
             if (hit) {
-                Debug.Log("Hit something!");
+                var interactable = hit.collider.gameObject.GetComponent<IInteractable>();
+                if (interactable != null) {
+                    interactable.Interact(this);
+                }
             }
         }
     }
