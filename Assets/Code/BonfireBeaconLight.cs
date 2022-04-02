@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Experimental.Rendering.Universal;
 
 public class BonfireBeaconLight : MonoBehaviour
 {
@@ -22,9 +23,11 @@ public class BonfireBeaconLight : MonoBehaviour
     private float dipDownTime;
 
     private Bonfire bonfire;
+    private Light2D beaconLight;
 
     private void Start() {
         bonfire = GetComponentInParent<Bonfire>();
+        beaconLight = GetComponent<Light2D>();
 
         if (bonfire == null) { enabled = false; return; }
 
@@ -79,6 +82,6 @@ public class BonfireBeaconLight : MonoBehaviour
 
         // light radius
         var w = Mathf.PerlinNoise(Time.time * beaconFrequency, 0) * beaconScale * kindlingModifier * animModifier;
-        transform.localScale = new Vector3(w, w, 1);
+        beaconLight.pointLightOuterRadius = w;
     }
 }

@@ -9,12 +9,8 @@ public class Bonfire : MonoBehaviour, IInteractable {
     private BonfireStage[] levels;
     [SerializeField] 
     private float remainingBurnTime;
-    [SerializeField] 
-    private Transform bonfireLightTransform;
     [SerializeField]
-    private float bonfireLightFrequency;
-    [SerializeField]
-    private float bonfireLightScale;
+    private SpriteRenderer spriteRenderer;
 
     public delegate void BonfireKindleAction(int newKindleLevel, int previousKindling);
     public event BonfireKindleAction OnKindled;
@@ -32,16 +28,12 @@ public class Bonfire : MonoBehaviour, IInteractable {
         }
     }
 
-    private SpriteRenderer spriteRenderer;
-
     private void Awake() {
         KindlingLevel = levels.Length - 1;
         maxKindling = levels.Length - 1;
     }
 
     private void Start() {
-        spriteRenderer = GetComponent<SpriteRenderer>();
-
         ValidateBonfireStages();
 
         while (remainingBurnTime < levels[kindlingLevel].transitionToNextStageSeconds) KindlingLevel--;
@@ -49,9 +41,8 @@ public class Bonfire : MonoBehaviour, IInteractable {
     }
 
     private void OnValidate() {
-        var sr = GetComponent<SpriteRenderer>();
         ValidateBonfireStages();
-        if (sr != null && levels != null && levels.Length > 0 && levels[levels.Length - 1] != null) sr.sprite = levels[levels.Length - 1]?.sprite;
+        if (spriteRenderer != null && levels != null && levels.Length > 0 && levels[levels.Length - 1] != null) spriteRenderer.sprite = levels[levels.Length - 1]?.sprite;
     }
 
     private void Update() {
@@ -87,8 +78,6 @@ public class Bonfire : MonoBehaviour, IInteractable {
 
     private void Burnout() {
         enabled = false;
-        bonfireLightTransform.localScale = Vector3.zero;
-        CancelInvoke("AnimateLight");
     }
 
     public void Interact(Controller controller) {
