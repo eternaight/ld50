@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class Controller : MonoBehaviour
 {
+    public static Controller main;
+
     private Vector2 velocity;
     [SerializeField] private float speed;
     [SerializeField] private Transform pointerTransform;
@@ -10,6 +12,10 @@ public class Controller : MonoBehaviour
     private float pointerLength = 0.5f;
 
     public Inventory inventory;
+
+    private void Awake() {
+        main = this;
+    }
 
     private void Start() {
         inventory = new Inventory();

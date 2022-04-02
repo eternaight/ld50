@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Bonfire2
   m_EditorClassIdentifier: 
   sprite: {fileID: 1087974196616175339, guid: d79f7258d89a7c044925f77f3a37c2a0, type: 3}
-  startBurnTime: 3
+  transitionToNextStageSeconds: 15

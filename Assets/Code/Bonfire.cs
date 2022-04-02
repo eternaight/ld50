@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class Bonfire : MonoBehaviour, IInteractable {
     [SerializeField] 
-    [Tooltip("Info about bonfire stages.")]
-    private BonfireStage[] stages;
+    [Tooltip("Info about bonfire kindling levels.")]
+    private BonfireStage[] levels;
     [SerializeField] 
     private float remainingBurnTime;
     [SerializeField] 
@@ -16,68 +16,73 @@ public class Bonfire : MonoBehaviour, IInteractable {
     [SerializeField]
     private float bonfireLightScale;
 
-    private int currentStage;
+    public delegate void BonfireKindleAction(int newKindleLevel, int previousKindling);
+    public event BonfireKindleAction OnKindled;
+
+    private int kindlingLevel;
+    public int maxKindling;
+    public int KindlingLevel {
+        get {
+            return kindlingLevel;
+        }
+        private set {
+            if (kindlingLevel == value) return;
+            OnKindled?.Invoke(value, kindlingLevel);
+            kindlingLevel = value;
+        }
+    }
+
     private SpriteRenderer spriteRenderer;
-    
+
+    private void Awake() {
+        KindlingLevel = levels.Length - 1;
+        maxKindling = levels.Length - 1;
+    }
+
     private void Start() {
         spriteRenderer = GetComponent<SpriteRenderer>();
-        currentStage = stages.Length - 1;
 
         ValidateBonfireStages();
 
-        while (remainingBurnTime < stages[currentStage].startBurnTime) currentStage--;
-
-        AnimateLight();
+        while (remainingBurnTime < levels[kindlingLevel].transitionToNextStageSeconds) KindlingLevel--;
+        UpdateRenderer();
     }
 
     private void OnValidate() {
-        ValidateBonfireStages();
-
         var sr = GetComponent<SpriteRenderer>();
-        if (sr != null) sr.sprite = stages[stages.Length - 1].sprite;
+        ValidateBonfireStages();
+        if (sr != null && levels != null && levels.Length > 0 && levels[levels.Length - 1] != null) sr.sprite = levels[levels.Length - 1]?.sprite;
     }
 
     private void Update() {
         remainingBurnTime -= Time.deltaTime;
 
-        if (remainingBurnTime <= 0) {
+        if (remainingBurnTime < 0) {
             Burnout();
-        } else if (remainingBurnTime < stages[currentStage].startBurnTime) {
-            currentStage--;
-            UpdateBonfireRenderer();
+        } else if (remainingBurnTime < levels[kindlingLevel].transitionToNextStageSeconds) {
+            KindlingLevel--;
+            UpdateRenderer();
         }
     }
 
     private void ValidateBonfireStages() {
-        if (stages is null) return;
-        if (stages.Length < 2) return;
-        foreach (var item in stages) {
+        if (levels is null) return;
+        if (levels.Length < 2) return;
+        foreach (var item in levels) {
             if (item is null) return;
         }
-        Array.Sort(stages);
-        stages[0].startBurnTime = 0;
+        Array.Sort(levels);
+        levels[0].transitionToNextStageSeconds = 0;
     }
 
-    private void TrySetStage(int newStage) {
-        if (newStage == currentStage) return;
-        currentStage = newStage;
-        spriteRenderer.sprite = stages[currentStage].sprite;
-    }
-
-    public void Feed(float seconds) {
+    public void Kindle(float seconds) {
         remainingBurnTime += seconds;
-        while (currentStage < stages.Length - 1 && remainingBurnTime > stages[currentStage + 1].startBurnTime) currentStage++;
-        UpdateBonfireRenderer();
+        while (kindlingLevel < levels.Length - 1 && remainingBurnTime > levels[kindlingLevel + 1].transitionToNextStageSeconds) KindlingLevel++;
+        UpdateRenderer();
     }
 
-    private void AnimateLight() {
-        var w = UnityEngine.Random.value * bonfireLightScale * ((float)currentStage / (stages.Length - 1));
-        bonfireLightTransform.localScale = new Vector3(w, w, 1);
-        Invoke("AnimateLight", UnityEngine.Random.value / bonfireLightFrequency);
-    }
-
-    private void UpdateBonfireRenderer() {
-        spriteRenderer.sprite = stages[currentStage].sprite;
+    private void UpdateRenderer() {
+        spriteRenderer.sprite = levels[kindlingLevel].sprite;
     }
 
     private void Burnout() {
@@ -88,7 +93,7 @@ public class Bonfire : MonoBehaviour, IInteractable {
 
     public void Interact(Controller controller) {
         if (controller.inventory.TryGetStick()) {
-            Feed(10);
+            Kindle(10);
         }
     }
 }

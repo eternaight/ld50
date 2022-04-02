@@ -7,16 +7,16 @@ TextureImporter:
     second: fire_1
   - first:
       213: 2415427818349680023
-    second: fire_02
+    second: fire_2
   - first:
       213: -5406070819977848584
-    second: atlast..._4
+    second: cloudperson
   - first:
       213: 1087974196616175339
     second: fire_0
   - first:
       213: 8901033231890695284
-    second: atlast..._12
+    second: tree
   - first:
       213: -340753598575859836
     second: atlast..._13
@@ -145,7 +145,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: fire_02
+      name: fire_2
       rect:
         serializedVersion: 2
         x: 389
@@ -166,7 +166,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: atlast..._4
+      name: cloudperson
       rect:
         serializedVersion: 2
         x: 827
@@ -208,7 +208,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: atlast..._12
+      name: tree
       rect:
         serializedVersion: 2
         x: 72
