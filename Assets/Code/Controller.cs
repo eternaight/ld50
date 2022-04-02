@@ -1,12 +1,13 @@
 using UnityEngine;
 
-public class Controller : MonoBehaviour
-{
+public class Controller : MonoBehaviour {
     public static Controller main;
 
     private Vector2 velocity;
     [SerializeField] private float speed;
     [SerializeField] private Transform pointerTransform;
+    [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] private Transform modelLight;
 
     private float pointerRadius = 1;
     private float pointerLength = 0.5f;
@@ -18,13 +19,14 @@ public class Controller : MonoBehaviour
     }
 
     private void Start() {
-        inventory = new Inventory();
+        inventory = Inventory.Main;
     }
 
     private void Update() {
         Move();
         PositionPointer();
         TryInteract();
+        UpdateRenderer();
     }
 
     private void Move() {
@@ -53,7 +55,7 @@ public class Controller : MonoBehaviour
     }
 
     private void TryInteract() {
-        if (Input.GetMouseButton(0)) {
+        if (Input.GetMouseButtonDown(0)) {
             var hit = Physics2D.Raycast(transform.position, pointerTransform.localPosition, pointerRadius + pointerLength / 2);
             if (hit) {
                 var interactable = hit.collider.gameObject.GetComponent<IInteractable>();
@@ -61,6 +63,18 @@ public class Controller : MonoBehaviour
                     interactable.Interact(this);
                 }
             }
+        }
+    }
+
+    private void UpdateRenderer() {
+        bool facingRight = spriteRenderer.flipX;
+        if (facingRight && velocity.x < 0) {
+            spriteRenderer.flipX = false;
+            modelLight.localScale = Vector3.one;
+        }
+        if (!facingRight && velocity.x > 0) {
+            spriteRenderer.flipX = true;
+            modelLight.localScale = new Vector3(-1, 1, 1);
         }
     }
 }

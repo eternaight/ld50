@@ -31,7 +31,7 @@ public class BonfireBeaconLight : MonoBehaviour
 
         if (bonfire == null) { enabled = false; return; }
 
-        bonfire.OnKindled += OnKindled;
+        bonfire.OnKindled += Bonfire_OnKindled;
 
         kindlingModifier = bonfire.KindlingLevel / bonfire.maxKindling;
         animModifier = 1;
@@ -41,7 +41,7 @@ public class BonfireBeaconLight : MonoBehaviour
         AnimateBeaconLight();
     }
 
-    private void OnKindled(int newKindlingLevel, int oldKindling) {
+    private void Bonfire_OnKindled(int newKindlingLevel, int oldKindling) {
         kindlingModifier = (float)newKindlingLevel / bonfire.maxKindling;
         if (newKindlingLevel > oldKindling) {
             StopAllCoroutines();
@@ -79,6 +79,7 @@ public class BonfireBeaconLight : MonoBehaviour
         offset.x = Mathf.Clamp(offset.x, viewportMin.x, viewportMax.x);
         offset.y = Mathf.Clamp(offset.y, viewportMin.y, viewportMax.y);
         transform.position = offset;
+        transform.localPosition *= 0.9f;
 
         // light radius
         var w = Mathf.PerlinNoise(Time.time * (beaconFrequency * Mathf.PerlinNoise(0.23f, Time.time)), 0.34f) * beaconScale * kindlingModifier * animModifier;
