@@ -7,7 +7,7 @@ public class Stick : MonoBehaviour, IInteractable, IInventoryItem {
     private const float minSeparation = .5f;
 
     public void Consume() {
-        gameObject.SetActive(false);
+        Destroy(gameObject);
     }
 
     public void FollowPosition(Vector3 pos) {

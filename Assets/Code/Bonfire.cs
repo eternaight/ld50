@@ -86,7 +86,7 @@ public class Bonfire : MonoBehaviour, IInteractable {
 
     public void Interact(Controller controller) {
         if (controller.inventory.TryGetStick()) {
-            Kindle(10);
+            Kindle(10 / (remainingBurnTime * 0.25f + 1));
         }
     }
 }

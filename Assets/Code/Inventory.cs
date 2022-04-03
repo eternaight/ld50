@@ -30,6 +30,8 @@ public class Inventory
     }
 
     public void AddItem(IInventoryItem item) {
+        if (convoy.Contains(item)) return;
+
         if (item is Stick) {
             convoy.Add(item);
         }

@@ -59,6 +59,7 @@ public class Controller : MonoBehaviour {
     private void UpdateRenderer() {
         var facingRight = spriteAnimator.GetFlipX();
         var offset = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
+
         if (facingRight && offset.x < 0) {
             spriteAnimator.SetFlipX(false);
             modelLight.localScale = Vector3.one;
