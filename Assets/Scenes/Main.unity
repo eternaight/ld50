@@ -1186,7 +1186,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &590176569
 Transform:
   m_ObjectHideFlags: 0
@@ -1434,7 +1434,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 0.1
   pointerTransform: {fileID: 286716928}
-  spriteRenderer: {fileID: 1831247717}
+  spriteAnimator: {fileID: 1831247719}
   modelLight: {fileID: 659607578}
 --- !u!1 &659607577
 GameObject:
@@ -3157,6 +3157,7 @@ GameObject:
   - component: {fileID: 1831247716}
   - component: {fileID: 1831247717}
   - component: {fileID: 1831247718}
+  - component: {fileID: 1831247719}
   m_Layer: 0
   m_Name: Model
   m_TagString: Untagged
@@ -3240,6 +3241,21 @@ SortingGroup:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &1831247719
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1831247715}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31e8e76075a85134691710e7cbab14ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clips:
+  - {fileID: 11400000, guid: 49a84c4c9f3ead64cb2a66fb0a7e1749, type: 2}
+  clipNow: 0
 --- !u!1001 &1904955597
 PrefabInstance:
   m_ObjectHideFlags: 0

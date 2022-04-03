@@ -6,7 +6,7 @@ public class Controller : MonoBehaviour {
     private Vector2 velocity;
     [SerializeField] private float speed;
     [SerializeField] private Transform pointerTransform;
-    [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] private SpriteAnimator spriteAnimator;
     [SerializeField] private Transform modelLight;
 
     private float pointerRadius = 1;
@@ -67,13 +67,14 @@ public class Controller : MonoBehaviour {
     }
 
     private void UpdateRenderer() {
-        bool facingRight = spriteRenderer.flipX;
-        if (facingRight && velocity.x < 0) {
-            spriteRenderer.flipX = false;
+        var facingRight = spriteAnimator.GetFlipX();
+        var offset = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
+        if (facingRight && offset.x < 0) {
+            spriteAnimator.SetFlipX(false);
             modelLight.localScale = Vector3.one;
         }
-        if (!facingRight && velocity.x > 0) {
-            spriteRenderer.flipX = true;
+        if (!facingRight && offset.x > 0) {
+            spriteAnimator.SetFlipX(true);
             modelLight.localScale = new Vector3(-1, 1, 1);
         }
     }
