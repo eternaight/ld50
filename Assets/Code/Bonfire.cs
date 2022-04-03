@@ -73,6 +73,7 @@ public class Bonfire : MonoBehaviour, IInteractable {
 
     public void Kindle(float seconds) {
         remainingBurnTime += seconds;
+        SpawnSparks();
         while (kindlingLevel < levels.Length - 1 && remainingBurnTime > levels[kindlingLevel + 1].transitionToNextStageSeconds) KindlingLevel++;
     }
 
@@ -84,9 +85,14 @@ public class Bonfire : MonoBehaviour, IInteractable {
         enabled = false;
     }
 
+    private void SpawnSparks() {
+        var prefab = Resources.Load<GameObject>("Kindle Sparks");
+        Instantiate(prefab, transform);
+    }
+
     public void Interact(Controller controller) {
         if (controller.inventory.TryGetStick()) {
-            Kindle(10 / (remainingBurnTime * 0.25f + 1));
+            Kindle(levels[kindlingLevel].stickScore);
         }
     }
 }

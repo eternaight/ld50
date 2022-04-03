@@ -8,6 +8,8 @@ public class BonfireStage : ScriptableObject, IComparable<BonfireStage>
     public SpriteAnimationClip clip;
     [Header("Seconds remaining when this stage stops")] 
     public float transitionToNextStageSeconds;
+    [Header("Seconds added to the bonfire by feeding it sticks")]
+    public float stickScore;
 
     public int CompareTo(BonfireStage obj) {
         if (obj == null) return 1;

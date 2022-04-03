@@ -13,9 +13,7 @@ public class SpriteAnimator : MonoBehaviour {
     private void Awake() {
         enabled = false;
         spriteRenderer = GetComponent<SpriteRenderer>();
-    }
-
-    private void Start() {
+        clipNow = -1;
     }
 
     private void Update() {
@@ -27,7 +25,10 @@ public class SpriteAnimator : MonoBehaviour {
     }
 
     public void PlayClip(int clipIndex) {
-        if (spriteRenderer == null) return;
+        if (spriteRenderer == null) {
+            spriteRenderer = GetComponent<SpriteRenderer>();
+            if (spriteRenderer == null) return;
+        }
         if (clipNow == clipIndex) return;
         
         enabled = true;
