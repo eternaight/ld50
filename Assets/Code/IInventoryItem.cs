@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 public interface IInventoryItem {
-    void FollowPosition(Vector3 pos);
-    Vector3 GetPosition();
+    void SetFollow(Transform pos);
+    Transform GetTransform();
     void Consume();
 }

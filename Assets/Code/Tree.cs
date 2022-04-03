@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Tree : MonoBehaviour, IInteractable
-{
+public class Tree : MonoBehaviour, IInteractable {
     private int hits = 0;
 
     public void Interact(Controller controller) {
@@ -32,5 +31,9 @@ public class Tree : MonoBehaviour, IInteractable
         }
 
         Destroy(gameObject);
+    }
+
+    public bool IsInteractable() {
+        return enabled;
     }
 }

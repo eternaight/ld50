@@ -71,8 +71,8 @@ public class Bonfire : MonoBehaviour, IInteractable {
         levels[0].transitionToNextStageSeconds = 0;
     }
 
-    public void Kindle(float seconds) {
-        remainingBurnTime += seconds;
+    public void Kindle() {
+        remainingBurnTime += levels[kindlingLevel].stickScore;
         SpawnSparks();
         while (kindlingLevel < levels.Length - 1 && remainingBurnTime > levels[kindlingLevel + 1].transitionToNextStageSeconds) KindlingLevel++;
     }
@@ -91,8 +91,28 @@ public class Bonfire : MonoBehaviour, IInteractable {
     }
 
     public void Interact(Controller controller) {
-        if (controller.inventory.TryGetStick()) {
-            Kindle(levels[kindlingLevel].stickScore);
+        var topStick = controller.inventory.Pop() as Stick;
+        if (topStick != null) {
+            topStick.Detach();
+            topStick.SetFollow(transform);
         }
+    }
+
+    public bool IsInteractable() {
+        return enabled;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision) {
+        var stick = collision.GetComponent<Stick>();
+        if (stick) {
+            Kindle();
+            stick.Consume();
+        }
+    }
+
+    public float GetTemperature(Vector3 point) {
+        var baseTemperature = levels[kindlingLevel].temperature;
+        var distance = Vector3.Distance(point, transform.position);
+        return baseTemperature / (distance + 1);
     }
 }

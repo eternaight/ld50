@@ -10,6 +10,8 @@ public class BonfireStage : ScriptableObject, IComparable<BonfireStage>
     public float transitionToNextStageSeconds;
     [Header("Seconds added to the bonfire by feeding it sticks")]
     public float stickScore;
+    [Header("Temperature of the bonfire at distance 0")]
+    public float temperature;
 
     public int CompareTo(BonfireStage obj) {
         if (obj == null) return 1;

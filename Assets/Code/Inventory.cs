@@ -22,10 +22,18 @@ public class Inventory
         convoy = new List<IInventoryItem>();
     }
 
-    public void UpdateConvoyPositions(Vector3 headPosition) {
+    public void UpdateConvoyPositions(Transform headTf) {
         foreach (var item in convoy) {
-            item.FollowPosition(headPosition);
-            headPosition = item.GetPosition();
+            item.SetFollow(headTf);
+            headTf = item.GetTransform();
+        }
+        
+        for (int i = 0; i < convoy.Count;) {
+            if (convoy[i] != null) {
+                i++; 
+            } else {
+                convoy.RemoveAt(i);
+            }
         }
     }
 
@@ -37,14 +45,16 @@ public class Inventory
         }
     }
 
-    public bool TryGetStick() {
+    public IInventoryItem Pop() {
         if (convoy.Count > 0) {
             var item = convoy[convoy.Count - 1];
-            item.Consume();
-            convoy.RemoveAt(convoy.Count - 1);
             OnInventoryChange?.Invoke();
-            return true;
+            return item;
         }
-        return false;
+        return null;
+    }
+
+    public bool Remove(IInventoryItem item) {
+        return convoy.Remove(item);
     }
 }

@@ -9,11 +9,18 @@ public class SpriteAnimator : MonoBehaviour {
     private SpriteRenderer spriteRenderer;
     [SerializeField]
     private int clipNow;
+    [SerializeField]
+    private bool playOnStart;
 
     private void Awake() {
-        enabled = false;
+        enabled = playOnStart;
         spriteRenderer = GetComponent<SpriteRenderer>();
-        clipNow = -1;
+    }
+
+    private void Start() {
+        if (playOnStart) {
+            PlayClip(clipNow);
+        }
     }
 
     private void Update() {

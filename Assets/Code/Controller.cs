@@ -10,7 +10,6 @@ public class Controller : MonoBehaviour {
     private ControllerPointer pointer;
 
     public Inventory inventory;
-    private bool warm;
 
     private void Awake() {
         main = this;
@@ -26,14 +25,13 @@ public class Controller : MonoBehaviour {
         Move();
         TryInteract();
         UpdateRenderer();
-        CheckBonfireProximity();
-        inventory.UpdateConvoyPositions(transform.position);
+        inventory.UpdateConvoyPositions(transform);
     }
 
     private void Move() {
         var move = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         if (move != Vector2.zero) {
-            velocity += move * speed;
+            velocity += move.normalized * speed;
         }
 
         velocity = Vector2.Lerp(velocity, Vector2.zero, Time.deltaTime / speed);
@@ -42,20 +40,22 @@ public class Controller : MonoBehaviour {
     }
 
     private void TryInteract() {
-        var hit = Physics2D.Raycast(transform.position, pointer.transform.localPosition, pointer.Extent);
-        if (hit) {
-            var interactable = hit.collider.gameObject.GetComponent<IInteractable>();
-            if (interactable != null) {
-                pointer.OnHoverOver(interactable);
-                if (Input.GetMouseButtonDown(0)) {
-                    interactable.Interact(this);
+        RaycastHit2D[] results = Physics2D.RaycastAll(transform.position, pointer.transform.localPosition, pointer.Extent);
+
+        if (results.Length > 0) {
+            foreach (var hit in results) {
+                var interactable = hit.collider.gameObject.GetComponent<IInteractable>();
+                if (interactable != null && interactable.IsInteractable()) {
+                    pointer.OnHoverOver(interactable);
+                    if (Input.GetMouseButtonDown(0)) {
+                        interactable.Interact(this);
+                    }
+                    return;
                 }
-            } else {
-                pointer.OnStopHover();
             }
-        } else {
-            pointer.OnStopHover();
-        }
+        } 
+        
+        pointer.OnStopHover();
     }
 
     private void UpdateRenderer() {
@@ -69,14 +69,6 @@ public class Controller : MonoBehaviour {
         if (!facingRight && offset.x > 0) {
             spriteAnimator.SetFlipX(true);
             pointer.SetFlipX(true);
-        }
-    }
-
-    private void CheckBonfireProximity() {
-        var newWarm = (Vector3.Distance(transform.position, Vector3.zero) < 2);
-        if (warm != newWarm) {
-            spriteAnimator.PlayClip(newWarm ? 1 : 0);
-            warm = newWarm;
         }
     }
 

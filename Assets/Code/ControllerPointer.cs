@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Experimental.Rendering.Universal;
 
 public class ControllerPointer : MonoBehaviour
 {
     private SpriteAnimator spriteAnimator;
+    private Light2D light;
 
     private float pointerRadius = 1;
     private float pointerLength = 0.5f;
@@ -12,6 +14,7 @@ public class ControllerPointer : MonoBehaviour
 
     private void Start() {
         spriteAnimator = GetComponentInChildren<SpriteAnimator>();
+        light = GetComponentInChildren<Light2D>();
     }
 
     private void Update() {
@@ -29,9 +32,13 @@ public class ControllerPointer : MonoBehaviour
         } else {
             spriteAnimator.PlayClip(0);
         }
+        light.enabled = true;
     }
 
     public void SetFlipX(bool flip) => spriteAnimator.SetFlipX(flip);
 
-    public void OnStopHover() => spriteAnimator.PlayClip(2);
+    public void OnStopHover() {
+        spriteAnimator.PlayClip(2);
+        light.enabled = false;
+    }
 }

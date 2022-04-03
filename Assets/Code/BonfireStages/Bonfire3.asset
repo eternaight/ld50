@@ -15,3 +15,4 @@ MonoBehaviour:
   clip: {fileID: 11400000, guid: d656a38af8499cc47b9dd2d327fcffb8, type: 2}
   transitionToNextStageSeconds: 30
   stickScore: 4
+  temperature: 50
