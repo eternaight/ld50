@@ -8,7 +8,13 @@ public class Tree : MonoBehaviour, IInteractable
 
     public void Interact(Controller controller) {
         hits++;
+        SpawnParticles(controller.GetPointerPosition());
         if (hits > 2) CutDown();
+    }
+
+    private void SpawnParticles(Vector3 pos) {
+        var thing = Resources.Load<GameObject>("Tree Break Particles (0)");
+        Instantiate(thing, transform.parent).transform.position = pos;
     }
 
     private void CutDown() {

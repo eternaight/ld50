@@ -3716,7 +3716,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   beaconScale: 7
-  beaconFrequency: 0.5
+  beaconFrequency: 0.1
   kindlingModifier: 0
   animModifier: 0
   lightUpCurve:

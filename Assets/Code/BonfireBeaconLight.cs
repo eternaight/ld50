@@ -82,7 +82,7 @@ public class BonfireBeaconLight : MonoBehaviour
         transform.localPosition *= 0.9f;
 
         // light radius
-        var w = Mathf.PerlinNoise(Time.time * (beaconFrequency * Mathf.PerlinNoise(0.23f, Time.time)), 0.34f) * beaconScale * kindlingModifier * animModifier;
+        var w = Mathf.PerlinNoise(Time.time * beaconFrequency * Mathf.PerlinNoise(0.23f, Time.time), 0.34f) * beaconScale * kindlingModifier * animModifier;
         
         foreach (Light2D light in bonfireLights) {
             light.pointLightOuterRadius = w;
