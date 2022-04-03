@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6c9d6a71f14ed134ca76cc047711b5c3, type: 3}
-  m_Name: Test
+  m_Name: Bonfire4
   m_EditorClassIdentifier: Assembly-CSharp::SpriteAnimationClip
   frames:
-  - {fileID: 4208398327968885152, guid: 418fc688ee6a2c04cbfb7d21c3cd2183, type: 3}
-  - {fileID: 3567334959540317862, guid: a4b4e99a3c0aa3642a3b7b747614353e, type: 3}
-  - {fileID: 1966899206764366669, guid: 9bed85ad80e783644bf957684082d277, type: 3}
-  framerate: 0.3
+  - {fileID: 2524995033363044279, guid: 418fc688ee6a2c04cbfb7d21c3cd2183, type: 3}
+  - {fileID: 8468934893616474851, guid: a4b4e99a3c0aa3642a3b7b747614353e, type: 3}
+  - {fileID: -7909878587242040874, guid: 9bed85ad80e783644bf957684082d277, type: 3}
+  framerate: 0

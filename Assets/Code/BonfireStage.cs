@@ -5,7 +5,7 @@ using UnityEngine;
 public class BonfireStage : ScriptableObject, IComparable<BonfireStage>
 {
     [Header("Bonfire sprite at this stage")] 
-    public Sprite sprite;
+    public SpriteAnimationClip clip;
     [Header("Seconds remaining when this stage stops")] 
     public float transitionToNextStageSeconds;
 

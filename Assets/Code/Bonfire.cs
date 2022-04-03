@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering.Universal;
 
@@ -11,7 +12,7 @@ public class Bonfire : MonoBehaviour, IInteractable {
     [SerializeField] 
     private float remainingBurnTime;
     [SerializeField]
-    private SpriteRenderer spriteRenderer;
+    private SpriteAnimator spriteAnimator;
     [SerializeField]
     private Light2D spriteLight;
 
@@ -39,13 +40,14 @@ public class Bonfire : MonoBehaviour, IInteractable {
     private void Start() {
         ValidateBonfireStages();
 
+        OnKindled += UpdateRenderer;
+        spriteAnimator.RegisterClips(levels.Select(level => level.clip));
+
         while (remainingBurnTime < levels[kindlingLevel].transitionToNextStageSeconds) KindlingLevel--;
-        UpdateRenderer();
     }
 
     private void OnValidate() {
         ValidateBonfireStages();
-        if (spriteRenderer != null && levels != null && levels.Length > 0 && levels[levels.Length - 1] != null) spriteRenderer.sprite = levels[levels.Length - 1]?.sprite;
     }
 
     private void Update() {
@@ -55,7 +57,6 @@ public class Bonfire : MonoBehaviour, IInteractable {
             Burnout();
         } else if (remainingBurnTime < levels[kindlingLevel].transitionToNextStageSeconds) {
             KindlingLevel--;
-            UpdateRenderer();
         }
     }
 
@@ -72,11 +73,10 @@ public class Bonfire : MonoBehaviour, IInteractable {
     public void Kindle(float seconds) {
         remainingBurnTime += seconds;
         while (kindlingLevel < levels.Length - 1 && remainingBurnTime > levels[kindlingLevel + 1].transitionToNextStageSeconds) KindlingLevel++;
-        UpdateRenderer();
     }
 
-    private void UpdateRenderer() {
-        spriteRenderer.sprite = levels[kindlingLevel].sprite;
+    private void UpdateRenderer(int oldKinglingLevel, int newKinglingLevel) {
+        spriteAnimator.PlayClip(newKinglingLevel);
     }
 
     private void Burnout() {
