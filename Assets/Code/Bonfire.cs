@@ -42,6 +42,7 @@ public class Bonfire : MonoBehaviour, IInteractable {
 
         OnKindled += UpdateRenderer;
         spriteAnimator.RegisterClips(levels.Select(level => level.clip));
+        UpdateRenderer(KindlingLevel, 0);
 
         while (remainingBurnTime < levels[kindlingLevel].transitionToNextStageSeconds) KindlingLevel--;
     }
@@ -75,8 +76,8 @@ public class Bonfire : MonoBehaviour, IInteractable {
         while (kindlingLevel < levels.Length - 1 && remainingBurnTime > levels[kindlingLevel + 1].transitionToNextStageSeconds) KindlingLevel++;
     }
 
-    private void UpdateRenderer(int oldKinglingLevel, int newKinglingLevel) {
-        spriteAnimator.PlayClip(newKinglingLevel);
+    private void UpdateRenderer(int newKindleLevel, int previousKindling) {
+        spriteAnimator.PlayClip(newKindleLevel);
     }
 
     private void Burnout() {

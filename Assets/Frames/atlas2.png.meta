@@ -32,6 +32,12 @@ TextureImporter:
   - first:
       213: 1966899206764366669
     second: atlas2_9
+  - first:
+      213: -6347690307002199289
+    second: atlas2_10
+  - first:
+      213: -806730537949084301
+    second: atlas2_11
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -140,8 +146,8 @@ TextureImporter:
         y: 1595
         width: 152
         height: 206
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -161,8 +167,8 @@ TextureImporter:
         y: 1595
         width: 152
         height: 312
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -182,8 +188,8 @@ TextureImporter:
         y: 1595
         width: 152
         height: 390
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -203,8 +209,8 @@ TextureImporter:
         y: 1595
         width: 167
         height: 453
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -225,7 +231,7 @@ TextureImporter:
         width: 377
         height: 462
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -246,7 +252,7 @@ TextureImporter:
         width: 208
         height: 263
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -267,7 +273,7 @@ TextureImporter:
         width: 120
         height: 118
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -288,7 +294,7 @@ TextureImporter:
         width: 79
         height: 11
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -309,7 +315,7 @@ TextureImporter:
         width: 114
         height: 200
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -330,7 +336,7 @@ TextureImporter:
         width: 129
         height: 148
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -338,6 +344,48 @@ TextureImporter:
       bones: []
       spriteID: d4b00305864db4b10800000000000000
       internalID: 1966899206764366669
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: atlas2_10
+      rect:
+        serializedVersion: 2
+        x: 58
+        y: 1087
+        width: 27
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 70391fa1c4978e7a0800000000000000
+      internalID: -6347690307002199289
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: atlas2_11
+      rect:
+        serializedVersion: 2
+        x: 115
+        y: 1081
+        width: 44
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 375c51899daedc4f0800000000000000
+      internalID: -806730537949084301
       vertices: []
       indices: 
       edges: []

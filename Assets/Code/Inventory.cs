@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using UnityEngine;
+
 public class Inventory
 {
     private static Inventory main;
@@ -8,26 +11,36 @@ public class Inventory
         }
     }
 
-    private int stickCount;
-    public int GetInventoryCount() { return stickCount; }
+    private readonly List<IInventoryItem> convoy;
+
+    public int GetInventoryCount() { return convoy.Count; }
 
     public event System.Action OnInventoryChange;
 
     private Inventory() {
         main = this;
+        convoy = new List<IInventoryItem>();
     }
 
-    public void AddItem(IInteractable item) {
+    public void UpdateConvoyPositions(Vector3 headPosition) {
+        foreach (var item in convoy) {
+            item.FollowPosition(headPosition);
+            headPosition = item.GetPosition();
+        }
+    }
+
+    public void AddItem(IInventoryItem item) {
         if (item is Stick) {
-            stickCount++;
-            OnInventoryChange();
+            convoy.Add(item);
         }
     }
 
     public bool TryGetStick() {
-        if (stickCount > 0) {
-            stickCount--;
-            OnInventoryChange();
+        if (convoy.Count > 0) {
+            var item = convoy[convoy.Count - 1];
+            item.Consume();
+            convoy.RemoveAt(convoy.Count - 1);
+            OnInventoryChange?.Invoke();
             return true;
         }
         return false;

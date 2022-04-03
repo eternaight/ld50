@@ -10,17 +10,28 @@ public class SpriteAnimator : MonoBehaviour {
     [SerializeField]
     private int clipNow;
 
-    private void Start() {
+    private void Awake() {
+        enabled = false;
         spriteRenderer = GetComponent<SpriteRenderer>();
+    }
 
-        PlayClip(clipNow);
+    private void Start() {
     }
 
     private void Update() {
         spriteRenderer.sprite = clips[clipNow].GetFrameAtTime(Time.time);
     }
 
+    public void Stop() {
+        enabled = false;
+    }
+
     public void PlayClip(int clipIndex) {
+        if (spriteRenderer == null) return;
+        if (clipNow == clipIndex) return;
+        
+        enabled = true;
+
         if (clipIndex >= 0 && clipIndex < clips.Count) {
             clips[clipIndex].SetStartTime();
             clipNow = clipIndex;

@@ -16,4 +16,4 @@ MonoBehaviour:
   - {fileID: -2008028652834490835, guid: 418fc688ee6a2c04cbfb7d21c3cd2183, type: 3}
   - {fileID: -5672313178743506957, guid: a4b4e99a3c0aa3642a3b7b747614353e, type: 3}
   - {fileID: 3395245267796733770, guid: 9bed85ad80e783644bf957684082d277, type: 3}
-  framerate: 0.3
+  framerate: 3

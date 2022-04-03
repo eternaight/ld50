@@ -5,12 +5,9 @@ public class Controller : MonoBehaviour {
 
     private Vector2 velocity;
     [SerializeField] private float speed;
-    [SerializeField] private Transform pointerTransform;
     [SerializeField] private SpriteAnimator spriteAnimator;
     [SerializeField] private Transform modelLight;
-
-    private float pointerRadius = 1;
-    private float pointerLength = 0.5f;
+    private ControllerPointer pointer;
 
     public Inventory inventory;
 
@@ -20,13 +17,15 @@ public class Controller : MonoBehaviour {
 
     private void Start() {
         inventory = Inventory.Main;
+        pointer = GetComponentInChildren<ControllerPointer>();
+        spriteAnimator.PlayClip(0);
     }
 
     private void Update() {
         Move();
-        PositionPointer();
         TryInteract();
         UpdateRenderer();
+        inventory.UpdateConvoyPositions(transform.position);
     }
 
     private void Move() {
@@ -40,24 +39,20 @@ public class Controller : MonoBehaviour {
         transform.Translate(velocity * Time.deltaTime);
     }
 
-    private void PositionPointer() {
-        var cursorPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        cursorPosition.z = 0;
-        var offset = Vector3.ClampMagnitude(cursorPosition - transform.position, pointerRadius);
-
-        pointerTransform.localPosition = offset;
-        pointerTransform.eulerAngles = Vector3.forward * (Mathf.Atan2(offset.y, offset.x) * Mathf.Rad2Deg);
-    }
-
     private void TryInteract() {
-        if (Input.GetMouseButtonDown(0)) {
-            var hit = Physics2D.Raycast(transform.position, pointerTransform.localPosition, pointerRadius + pointerLength / 2);
-            if (hit) {
-                var interactable = hit.collider.gameObject.GetComponent<IInteractable>();
-                if (interactable != null) {
+        var hit = Physics2D.Raycast(transform.position, pointer.transform.localPosition, pointer.Extent);
+        if (hit) {
+            var interactable = hit.collider.gameObject.GetComponent<IInteractable>();
+            if (interactable != null) {
+                pointer.OnHoverOver(interactable);
+                if (Input.GetMouseButtonDown(0)) {
                     interactable.Interact(this);
                 }
+            } else {
+                pointer.OnStopHover();
             }
+        } else {
+            pointer.OnStopHover();
         }
     }
 
@@ -74,5 +69,5 @@ public class Controller : MonoBehaviour {
         }
     }
 
-    public Vector3 GetPointerPosition() => pointerTransform.position;
+    public Vector3 GetPointerPosition() => pointer.transform.position;
 }

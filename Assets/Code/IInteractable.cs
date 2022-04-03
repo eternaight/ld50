@@ -1,3 +1,3 @@
 ﻿public interface IInteractable {
-    void Interact(Controller controller); 
+    void Interact(Controller controller);
 }
