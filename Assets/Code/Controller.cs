@@ -10,6 +10,7 @@ public class Controller : MonoBehaviour {
     private ControllerPointer pointer;
 
     public Inventory inventory;
+    private bool warm;
 
     private void Awake() {
         main = this;
@@ -25,6 +26,7 @@ public class Controller : MonoBehaviour {
         Move();
         TryInteract();
         UpdateRenderer();
+        CheckBonfireProximity();
         inventory.UpdateConvoyPositions(transform.position);
     }
 
@@ -62,11 +64,19 @@ public class Controller : MonoBehaviour {
 
         if (facingRight && offset.x < 0) {
             spriteAnimator.SetFlipX(false);
-            modelLight.localScale = Vector3.one;
+            pointer.SetFlipX(false);
         }
         if (!facingRight && offset.x > 0) {
             spriteAnimator.SetFlipX(true);
-            modelLight.localScale = new Vector3(-1, 1, 1);
+            pointer.SetFlipX(true);
+        }
+    }
+
+    private void CheckBonfireProximity() {
+        var newWarm = (Vector3.Distance(transform.position, Vector3.zero) < 2);
+        if (warm != newWarm) {
+            spriteAnimator.PlayClip(newWarm ? 1 : 0);
+            warm = newWarm;
         }
     }
 

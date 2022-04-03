@@ -12,7 +12,9 @@ public class Stick : MonoBehaviour, IInteractable, IInventoryItem {
 
     public void FollowPosition(Vector3 pos) {
         var distance = Vector3.Distance(pos, transform.position);
-        if (distance < minSeparation) return;
+        if (Mathf.Abs(distance - minSeparation) < 0.01f) {
+            return;
+        }
         distance -= minSeparation;
         transform.position = Vector3.MoveTowards(transform.position, pos, stickSpeed * Time.deltaTime * distance);
     }

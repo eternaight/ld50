@@ -31,5 +31,7 @@ public class ControllerPointer : MonoBehaviour
         }
     }
 
+    public void SetFlipX(bool flip) => spriteAnimator.SetFlipX(flip);
+
     public void OnStopHover() => spriteAnimator.PlayClip(2);
 }
